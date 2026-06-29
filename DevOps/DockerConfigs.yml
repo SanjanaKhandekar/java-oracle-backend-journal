@@ -1,0 +1,24 @@
+# Day 3: Containerizing a Spring Boot and Oracle DB Environment
+# Topic: DevOps & Local Database Setup
+
+version: '3.8'
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:latest
+    container_name: local_oracle_instance
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=MySecurePassword123
+      - APP_USER=fresher_dev
+      - APP_PASSWORD=password123
+
+  spring-backend:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - oracle-db
+
+# Benefit: Solves the "works on my machine" problem. A recruiter can run this environment anywhere.
