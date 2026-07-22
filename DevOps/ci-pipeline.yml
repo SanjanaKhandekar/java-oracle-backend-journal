@@ -1,0 +1,31 @@
+# Day 27: Continuous Integration (CI) pipeline setup using GitHub Actions
+# Topic: Automated Testing & Devops Pipelines
+name: Java & Spring Boot CI Pipeline
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17 Environment
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Compile and Run Unit Tests with Maven
+      run: mvn clean test
+
+
+  # Benefit: Ensures no broken code or failing tests ever make it to your production repository.
+
